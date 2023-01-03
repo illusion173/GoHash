@@ -1,5 +1,6 @@
-# Linear Probing Hashmap Implementation
+# GoHash
 
-## Author: Jeremiah Webb
+### Linear Probing Hashmap Implementation <br>
+### Author: Jeremiah Webb
 
 
