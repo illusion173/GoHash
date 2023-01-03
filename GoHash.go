@@ -18,10 +18,10 @@ func main(){
   // Initially of course both slices will not have anything
   value_slice = make([]uint64, num_of_pairs, size_of_table)
   key_slice = make([]string, num_of_pairs, size_of_table)
-  insert(32, nil)
+  insert(nil, nil)
 }
 func insert(key any, value any) bool {
-  if key == nil{
+  if(key == nil){
     panic("Key cannot be null")
   }
 
