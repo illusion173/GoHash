@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"hash/fnv"
+	"reflect"
 )
 
-// This is the initial size of the hashmap
 var (
 	num_of_pairs    int    = 0
 	size_of_table   int    = 10
@@ -28,10 +28,59 @@ func main() {
 	for i := 0; i < len(keys_arr); i++ {
 		put(keys_arr[i], value_arr[i])
 	}
-
 	text, worked := get("John")
 	fmt.Println(text)
 	fmt.Println(worked)
+}
+
+func contains(key any) bool {
+	if key == nil {
+		panic("Cannot delete, does not exist!")
+	}
+	_, worked := get(key)
+	return worked
+}
+
+func deleteKey(key any) bool {
+	if key == nil {
+		fmt.Println("Key cannot be nil in get operation")
+		return false
+	}
+
+	if !contains(key) {
+		return false
+	}
+
+	i := hashKey(key)
+	for key != key_slice[i] {
+		i = ((i + 1) % uint32(size_of_table))
+	}
+	// Kind of gross but this is essentially deleting
+	key_slice[i] = ""
+	value_slice[i] = 0
+
+	i = ((i + 1) % size_of_table_u)
+
+	// TODO
+	// need to figure this out for generics
+	for key_slice[i] != "" {
+		var keytoredo string = key_slice[i]
+		var valuetoredo uint32 = value_slice[i]
+		key_slice[i] = ""
+		value_slice[i] = 0
+		num_of_pairs--
+		put(keytoredo, valuetoredo)
+		i = ((i + 1) % size_of_table_u)
+	}
+	num_of_pairs--
+
+	if num_of_pairs > 0 && num_of_pairs <= size_of_table/8 {
+		size_of_table /= 2
+		size_of_table_u /= 2
+		key_slice = resizeKey()
+		value_slice = resizeValue()
+	}
+	return false
 }
 
 func get(key any) (uint32, bool) {
