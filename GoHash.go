@@ -5,10 +5,9 @@ import (
 	"hash/fnv"
 )
 
-var num_of_pairs int = 0
-
 // This is the initial size of the hashmap
 var (
+	num_of_pairs    int    = 0
 	size_of_table   int    = 10
 	size_of_table_u uint32 = 10
 	key_slice       []string
