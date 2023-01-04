@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"hash/fnv"
-	"reflect"
 )
 
 var (
@@ -31,6 +30,8 @@ func main() {
 	text, worked := get("John")
 	fmt.Println(text)
 	fmt.Println(worked)
+	test := deleteKey("John")
+	fmt.Println(test)
 }
 
 func contains(key any) bool {
@@ -47,7 +48,7 @@ func deleteKey(key any) bool {
 		return false
 	}
 
-	if !contains(key) {
+	if contains(key) == false {
 		return false
 	}
 
@@ -79,8 +80,9 @@ func deleteKey(key any) bool {
 		size_of_table_u /= 2
 		key_slice = resizeKey()
 		value_slice = resizeValue()
+
 	}
-	return false
+	return true
 }
 
 func get(key any) (uint32, bool) {
