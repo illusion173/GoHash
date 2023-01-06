@@ -74,13 +74,12 @@ func deleteKey(key any) bool {
 		i = ((i + 1) % size_of_table_u)
 	}
 	num_of_pairs--
-
+	// Essentially if the number of pairs is below 12.5% of the total size of the table, reduce the table by 1/2.
 	if num_of_pairs > 0 && num_of_pairs <= size_of_table/8 {
 		size_of_table /= 2
 		size_of_table_u /= 2
 		key_slice = resizeKey()
 		value_slice = resizeValue()
-
 	}
 	return true
 }
